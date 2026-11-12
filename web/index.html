@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NoiseWatch</title>
+  <meta name="description" content="Monitor kebisingan (sound horeg) lewat mikrofon, bisa offline.">
+  <meta name="theme-color" content="#0f1115">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>🔊 NoiseWatch</h1>
+      <span id="net" class="pill">online</span>
+    </header>
+
+    <section class="card meter-card">
+      <div id="status" class="status idle">Belum mulai</div>
+      <div class="readout"><span id="db">--.-</span> <small>dBFS</small></div>
+      <div class="bar"><div id="bar-fill"></div><div id="bar-threshold"></div></div>
+      <div class="stats">
+        <div><span class="label">Lama keras</span><span id="loud">0s</span></div>
+        <div><span class="label">Porsi bass (&lt;150 Hz)</span><span id="bass">--</span></div>
+        <div><span class="label">Peringatan</span><span id="alerts">0</span></div>
+      </div>
+      <div class="progress"><div id="progress-fill"></div></div>
+      <button id="toggle" class="primary">Mulai monitor</button>
+      <p class="hint">Biarkan layar tetap menyala: browser di HP biasanya mematikan mikrofon kalau aplikasi ditutup atau layar terkunci.</p>
+    </section>
+
+    <section class="card">
+      <h2>Pengaturan</h2>
+      <label>Ambang keras <output id="threshold-out"></output>
+        <input id="threshold" type="range" min="-60" max="0" step="1">
+      </label>
+      <label>Harus keras selama <output id="duration-out"></output>
+        <input id="duration" type="range" min="1" max="60" step="1">
+      </label>
+      <label>Jeda antar peringatan <output id="cooldown-out"></output>
+        <input id="cooldown" type="range" min="10" max="600" step="10">
+      </label>
+      <label class="check"><input id="sound" type="checkbox"> Bunyi saat peringatan</label>
+      <p class="hint">Patokan dari tes kamu: sepi ≈ −48, ngobrol ≈ −30, musik keras ≈ −12 dBFS. Angka ini relatif ke mikrofon, bukan dB SPL resmi.</p>
+    </section>
+
+    <section class="card">
+      <div class="row">
+        <h2>Riwayat</h2>
+        <div class="actions">
+          <button id="export">Ekspor CSV</button>
+          <button id="clear">Hapus</button>
+        </div>
+      </div>
+      <ul id="log"></ul>
+      <p id="log-empty" class="hint">Belum ada kejadian.</p>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
